@@ -1,0 +1,25 @@
+{
+  "name": "genshin-schedule",
+  "version": "1.0.0",
+  "description": "Discord bot for Genshin schedule, pulling data from [https://genshin.honeyhunterworld.com/](https://genshin.honeyhunterworld.com/)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wizo06/genshin-schedule.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wizo06/genshin-schedule/issues"
+  },
+  "homepage": "https://github.com/wizo06/genshin-schedule#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.5",
+    "googleapis": "^66.0.0",
+    "request": "^2.88.2"
+  }
+}
