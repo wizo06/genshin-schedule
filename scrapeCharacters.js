@@ -76,6 +76,8 @@ const scrapeCharacters = () => {
         table.push([...freedomSlot, ...resistanceSlot, ...balladSlot])
       }
 
+      table.push(['', '', '', '', '', ''])
+
       table.push([`=IMAGE("${arrOfTalentBooks.find(ele => ele.includes('prosperity'))}")`,
                   '"Prosperity"',
                   `=IMAGE("${arrOfTalentBooks.find(ele => ele.includes('diligence'))}")`,

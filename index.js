@@ -3,7 +3,7 @@ const readline = require('readline');
 const { google } = require('googleapis');
 
 const { scrapeCharacters } = require('./scrapeCharacters.js');
-const { scrapeSwords } = require('./scrapeSwords.js');
+const { scrapeWeapons } = require('./scrapeWeapons.js');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
@@ -75,17 +75,23 @@ function getNewToken(oAuth2Client, callback) {
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
 async function listMajors(auth) {
-  scrapedCharacters = await scrapeCharacters();
-  scrapedWeapons = await scrapeSwords();
-  
   const sheets = google.sheets({ version: 'v4', auth });
+  sheets.spreadsheets.values.clear({
+    spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
+    range: '2.0!B3:G'
+  })
+  
+  let scrapedCharacters = await scrapeCharacters();
+  let scrapedWeapons = await scrapeWeapons();
+
+  let emptyRow = [['', '', '', '', '', '']]
 
   sheets.spreadsheets.values.update({
-      spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-      range: '2.0!B3:G',
-      valueInputOption: 'USER_ENTERED',
-      resource: {
-        values: [...scrapedCharacters, ...scrapedWeapons]
-      }
+    spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
+    range: '2.0!B3:G',
+    valueInputOption: 'USER_ENTERED',
+    resource: {
+      values: [...scrapedCharacters, ...emptyRow, ...scrapedWeapons]
+    }
   });
 }
