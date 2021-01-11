@@ -76,16 +76,21 @@ function getNewToken(oAuth2Client, callback) {
  */
 async function listMajors(auth) {
   const sheets = google.sheets({ version: 'v4', auth });
+
+  console.log('Clearing sheet')
   sheets.spreadsheets.values.clear({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
     range: '2.0!B3:G'
   })
   
+  console.log('Scraping characters')
   let scrapedCharacters = await scrapeCharacters();
+  console.log('Scraping weapons')
   let scrapedWeapons = await scrapeWeapons();
 
   let emptyRow = [['', '', '', '', '', '']]
 
+  console.log('Writing sheet')
   sheets.spreadsheets.values.update({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
     range: '2.0!B3:G',

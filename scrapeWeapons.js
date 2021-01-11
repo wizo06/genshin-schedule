@@ -19,7 +19,8 @@ const scrapeByWeaponType = (weaponType) => {
     request(options, (err, res, body) => {
       $ = cheerio.load(body)
 
-      let arrOfWeapons = $('table.art_stat_table').first().find('tr')
+      // let arrOfWeapons = $('table.art_stat_table').first().find('tr') // Live
+      let arrOfWeapons = $('table.art_stat_table').last().find('tr') // Beta
 
       arrOfWeapons.each(function (i, elem) {
         // Skip the first tr
@@ -62,12 +63,18 @@ const scrapeByWeaponType = (weaponType) => {
 
 const scrapeWeapons = () => {
   return new Promise(async (resolve, reject) => {
+    console.log('Scraping swords')
     await scrapeByWeaponType('sword')
+    console.log('Scraping claymores')
     await scrapeByWeaponType('claymore')
+    console.log('Scraping polearms')
     await scrapeByWeaponType('polearm')
+    console.log('Scraping bows')
     await scrapeByWeaponType('bow')
+    console.log('Scraping catalysts')
     await scrapeByWeaponType('catalyst')
 
+    console.log('Building weapons table')
     table.push([`=IMAGE("${arrOfWeaponAscMat.find(ele => ele.includes('decarabian'))}")`,
       '"Decarabian"',
       `=IMAGE("${arrOfWeaponAscMat.find(ele => ele.includes('wolf'))}")`,
