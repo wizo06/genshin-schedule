@@ -4,6 +4,7 @@ const { google } = require('googleapis');
 
 const { scrapeCharacters } = require('./scrapeCharacters.js');
 const { scrapeWeapons } = require('./scrapeWeapons.js');
+const { scrapeTalents } = require('./scrapeTalents.js');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
@@ -80,23 +81,35 @@ async function listMajors(auth) {
   console.log('Clearing sheet')
   sheets.spreadsheets.values.clear({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: '2.0!B3:G'
+    range: '2.0!B3:K'
   })
   
   console.log('Scraping characters')
   let scrapedCharacters = await scrapeCharacters();
   console.log('Scraping weapons')
   let scrapedWeapons = await scrapeWeapons();
+  console.log('Scraping talents');
+  let scrapedTalents = await scrapeTalents();
 
   let emptyRow = [['', '', '', '', '', '']]
 
-  console.log('Writing sheet')
+  console.log('Writing book and weapon')
   sheets.spreadsheets.values.update({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
     range: '2.0!B3:G',
     valueInputOption: 'USER_ENTERED',
     resource: {
       values: [...scrapedCharacters, ...emptyRow, ...scrapedWeapons]
+    }
+  });
+
+  console.log('Writing talent')
+  sheets.spreadsheets.values.update({
+    spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
+    range: '2.0!I3:K',
+    valueInputOption: 'USER_ENTERED',
+    resource: {
+      values: [...scrapedTalents]
     }
   });
 }
