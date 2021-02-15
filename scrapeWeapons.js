@@ -115,7 +115,7 @@ const scrapeWeapons = () => {
       table.push([...guyunSlot, ...veiledSlot, ...aerosideriteSlot])
     }
 
-    console.log(table)
+    // console.log(table)
     resolve(table)
   })
 }
