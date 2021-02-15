@@ -31,31 +31,31 @@ const scrapeTalentMaterials = () => {
         let chars = $(this).find('div.sea_item_used_by_char').find('img').attr('src')
 
         if (itemName.includes(`Dvalin's Plume`)) {
-          plume.push([`=IMAGE("${chars}")`])
+          plume.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
         }
         else if (itemName.includes(`Dvalin's Claw`)) {
-          claw.push([`=IMAGE("${chars}")`])
+          claw.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
         }
         else if (itemName.includes(`Dvalin's Sigh`)) {
-          sigh.push([`=IMAGE("${chars}")`])
+          sigh.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
         }
         else if (itemName.includes(`Tail of Boreas`)) {
-          tail.push([`=IMAGE("${chars}")`])
+          tail.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
         }
         else if (itemName.includes(`Ring of Boreas`)) {
-          ring.push([`=IMAGE("${chars}")`])
+          ring.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
         }
         else if (itemName.includes(`Spirit Locket of Boreas`)) {
-          locket.push([`=IMAGE("${chars}")`])
+          locket.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
         }
         else if (itemName.includes(`Tusk of Monoceros Caeli`)) {
-          tusk.push([`=IMAGE("${chars}")`])
+          tusk.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
         }
         else if (itemName.includes(`Shard of a Foul Legacy`)) {
-          shard.push([`=IMAGE("${chars}")`])
+          shard.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
         }
         else if (itemName.includes(`Shadow of the Warrior`)) {
-          shadow.push([`=IMAGE("${chars}")`])
+          shadow.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
         }
 
         arrOfItems.push(itemPic)
@@ -72,9 +72,9 @@ const scrapeTalents = () => {
     await scrapeTalentMaterials()
 
     console.log('Building talent table')
-    table.push([`=IMAGE("${arrOfItems.find(ele => ele.includes('plume'))}")`,
-      `=IMAGE("${arrOfItems.find(ele => ele.includes('claw'))}")`,
-      `=IMAGE("${arrOfItems.find(ele => ele.includes('sigh'))}")`,
+    table.push([`=IMAGE("https://genshin.honeyhunterworld.com/${arrOfItems.find(ele => ele.includes('plume'))}")`,
+      `=IMAGE("https://genshin.honeyhunterworld.com/${arrOfItems.find(ele => ele.includes('claw'))}")`,
+      `=IMAGE("https://genshin.honeyhunterworld.com/${arrOfItems.find(ele => ele.includes('sigh'))}")`,
     ])
 
     while (plume.length > 0 ||
@@ -88,11 +88,11 @@ const scrapeTalents = () => {
       table.push([...plumeSlot, ...clawSlot, ...sighSlot])
     }
 
-    table.push(['', '', '', '', '', ''])
+    table.push(['', '', ''])
 
-    table.push([`=IMAGE("${arrOfItems.find(ele => ele.includes('tail'))}")`,
-      `=IMAGE("${arrOfItems.find(ele => ele.includes('ring'))}")`,
-      `=IMAGE("${arrOfItems.find(ele => ele.includes('locket'))}")`,,
+    table.push([`=IMAGE("https://genshin.honeyhunterworld.com/${arrOfItems.find(ele => ele.includes('tail'))}")`,
+      `=IMAGE("https://genshin.honeyhunterworld.com/${arrOfItems.find(ele => ele.includes('ring'))}")`,
+      `=IMAGE("https://genshin.honeyhunterworld.com/${arrOfItems.find(ele => ele.includes('locket'))}")`,,
     ])
 
     while (tail.length > 0 ||
@@ -106,11 +106,11 @@ const scrapeTalents = () => {
       table.push([...tailSlot, ...ringSlot, ...locketSlot])
     }
 
-    table.push(['', '', '', '', '', ''])
+    table.push(['', '', ''])
 
-    table.push([`=IMAGE("${arrOfItems.find(ele => ele.includes('tusk'))}")`,
-    `=IMAGE("${arrOfItems.find(ele => ele.includes('shard'))}")`,
-    `=IMAGE("${arrOfItems.find(ele => ele.includes('shadow'))}")`, ,
+    table.push([`=IMAGE("https://genshin.honeyhunterworld.com/${arrOfItems.find(ele => ele.includes('tusk'))}")`,
+    `=IMAGE("https://genshin.honeyhunterworld.com/${arrOfItems.find(ele => ele.includes('shard'))}")`,
+    `=IMAGE("https://genshin.honeyhunterworld.com/${arrOfItems.find(ele => ele.includes('shadow'))}")`, ,
     ])
 
     while (tusk.length > 0 ||
@@ -132,7 +132,7 @@ const scrapeTalents = () => {
 const pullFromArray = (arr) => {
   arrayElement = arr.shift()
   if (arrayElement) return arrayElement
-  return ['', '']
+  return ['']
 }
 
 module.exports = {

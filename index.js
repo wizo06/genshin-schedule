@@ -94,7 +94,7 @@ async function listMajors(auth) {
   let emptyRow = [['', '', '', '', '', '']]
 
   console.log('Writing book and weapon')
-  sheets.spreadsheets.values.update({
+  await sheets.spreadsheets.values.update({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
     range: '2.0!B3:G',
     valueInputOption: 'USER_ENTERED',
@@ -104,7 +104,7 @@ async function listMajors(auth) {
   });
 
   console.log('Writing talent')
-  sheets.spreadsheets.values.update({
+  await sheets.spreadsheets.values.update({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
     range: '2.0!I3:K',
     valueInputOption: 'USER_ENTERED',
@@ -112,4 +112,6 @@ async function listMajors(auth) {
       values: [...scrapedTalents]
     }
   });
+
+  console.log('Done')
 }
