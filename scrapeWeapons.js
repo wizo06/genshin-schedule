@@ -129,4 +129,3 @@ const pullFromArray = (arr) => {
 module.exports = {
   scrapeWeapons
 }
-scrapeWeapons()
