@@ -19,8 +19,8 @@ const scrapeByWeaponType = (weaponType) => {
     request(options, (err, res, body) => {
       $ = cheerio.load(body)
 
-      // let arrOfWeapons = $('table.art_stat_table').first().find('tr') // Live
-      let arrOfWeapons = $('table.art_stat_table').last().find('tr') // Beta
+      let arrOfWeapons = $('table.art_stat_table').first().find('tr') // Live
+      // let arrOfWeapons = $('table.art_stat_table').last().find('tr') // Beta
 
       arrOfWeapons.each(function (i, elem) {
         // Skip the first tr
@@ -115,6 +115,7 @@ const scrapeWeapons = () => {
       table.push([...guyunSlot, ...veiledSlot, ...aerosideriteSlot])
     }
 
+    console.log(table)
     resolve(table)
   })
 }
@@ -128,3 +129,4 @@ const pullFromArray = (arr) => {
 module.exports = {
   scrapeWeapons
 }
+scrapeWeapons()
