@@ -36,22 +36,22 @@ const scrapeUnreleasedCharacters = () => {
         talentWeekly = $(this).find('div.sea_char_mat_cont').find('img').eq(5).attr('src')
 
         if (talentBook.includes('freedom')) {
-          arrOfFreedom.push([`=IMAGE("${charPortrait}")`, charName])
+          arrOfFreedom.push([`=IMAGE("https://genshin.honeyhunterworld.com/${charPortrait}")`, charName])
         }
         else if (talentBook.includes('resistance')) {
-          arrOfResistance.push([`=IMAGE("${charPortrait}")`, charName])
+          arrOfResistance.push([`=IMAGE("https://genshin.honeyhunterworld.com/${charPortrait}")`, charName])
         }
         else if (talentBook.includes('ballad')) {
-          arrOfBallad.push([`=IMAGE("${charPortrait}")`, charName])
+          arrOfBallad.push([`=IMAGE("https://genshin.honeyhunterworld.com/${charPortrait}")`, charName])
         }
         else if (talentBook.includes('prosperity')) {
-          arrOfProsperity.push([`=IMAGE("${charPortrait}")`, charName])
+          arrOfProsperity.push([`=IMAGE("https://genshin.honeyhunterworld.com/${charPortrait}")`, charName])
         }
         else if (talentBook.includes('diligence')) {
-          arrOfDiligence.push([`=IMAGE("${charPortrait}")`, charName])
+          arrOfDiligence.push([`=IMAGE("https://genshin.honeyhunterworld.com/${charPortrait}")`, charName])
         }
         else if (talentBook.includes('gold')) {
-          arrOfGold.push([`=IMAGE("${charPortrait}")`, charName])
+          arrOfGold.push([`=IMAGE("https://genshin.honeyhunterworld.com/${charPortrait}")`, charName])
         }
 
         arrOfTalentBooks.push(talentBook)
@@ -88,22 +88,22 @@ const scrapeLiveCharacters = () => {
         talentWeekly = $(this).find('div.sea_char_mat_cont').find('img').eq(5).attr('src')
 
         if (talentBook.includes('freedom')) {
-          arrOfFreedom.push([`=IMAGE("${charPortrait}")`, charName])
+          arrOfFreedom.push([`=IMAGE("https://genshin.honeyhunterworld.com/${charPortrait}")`, charName])
         }
         else if (talentBook.includes('resistance')) {
-          arrOfResistance.push([`=IMAGE("${charPortrait}")`, charName])
+          arrOfResistance.push([`=IMAGE("https://genshin.honeyhunterworld.com/${charPortrait}")`, charName])
         }
         else if (talentBook.includes('ballad')) {
-          arrOfBallad.push([`=IMAGE("${charPortrait}")`, charName])
+          arrOfBallad.push([`=IMAGE("https://genshin.honeyhunterworld.com/${charPortrait}")`, charName])
         }
         else if (talentBook.includes('prosperity')) {
-          arrOfProsperity.push([`=IMAGE("${charPortrait}")`, charName])
+          arrOfProsperity.push([`=IMAGE("https://genshin.honeyhunterworld.com/${charPortrait}")`, charName])
         }
         else if (talentBook.includes('diligence')) {
-          arrOfDiligence.push([`=IMAGE("${charPortrait}")`, charName])
+          arrOfDiligence.push([`=IMAGE("https://genshin.honeyhunterworld.com/${charPortrait}")`, charName])
         }
         else if (talentBook.includes('gold')) {
-          arrOfGold.push([`=IMAGE("${charPortrait}")`, charName])
+          arrOfGold.push([`=IMAGE("https://genshin.honeyhunterworld.com/${charPortrait}")`, charName])
         }
 
         arrOfTalentBooks.push(talentBook)
@@ -122,11 +122,11 @@ const scrapeCharacters = () => {
     await scrapeUnreleasedCharacters()
 
     console.log('Building characters table')
-    table.push([`=IMAGE("${arrOfTalentBooks.find(ele => ele.includes('freedom'))}")`,
+    table.push([`=IMAGE("https://genshin.honeyhunterworld.com/${arrOfTalentBooks.find(ele => ele.includes('freedom'))}")`,
       '"Freedom"',
-    `=IMAGE("${arrOfTalentBooks.find(ele => ele.includes('resistance'))}")`,
+    `=IMAGE("https://genshin.honeyhunterworld.com/${arrOfTalentBooks.find(ele => ele.includes('resistance'))}")`,
       '"Resistance"',
-    `=IMAGE("${arrOfTalentBooks.find(ele => ele.includes('ballad'))}")`,
+    `=IMAGE("https://genshin.honeyhunterworld.com/${arrOfTalentBooks.find(ele => ele.includes('ballad'))}")`,
       '"Ballad"',
     ])
 
@@ -143,11 +143,11 @@ const scrapeCharacters = () => {
 
     table.push(['', '', '', '', '', ''])
 
-    table.push([`=IMAGE("${arrOfTalentBooks.find(ele => ele.includes('prosperity'))}")`,
+    table.push([`=IMAGE("https://genshin.honeyhunterworld.com/${arrOfTalentBooks.find(ele => ele.includes('prosperity'))}")`,
       '"Prosperity"',
-    `=IMAGE("${arrOfTalentBooks.find(ele => ele.includes('diligence'))}")`,
+    `=IMAGE("https://genshin.honeyhunterworld.com/${arrOfTalentBooks.find(ele => ele.includes('diligence'))}")`,
       '"Diligence"',
-    `=IMAGE("${arrOfTalentBooks.find(ele => ele.includes('gold'))}")`,
+    `=IMAGE("https://genshin.honeyhunterworld.com/${arrOfTalentBooks.find(ele => ele.includes('gold'))}")`,
       '"Gold"',
     ])
 

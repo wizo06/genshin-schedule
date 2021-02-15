@@ -28,34 +28,52 @@ const scrapeTalentMaterials = () => {
         // let starCount = $(this).find('div.stars_wrap').length
         let itemName = $(this).find('span.itemname').text()
         let itemPic = $(this).find('img.itempic').attr('src')
-        let chars = $(this).find('div.sea_item_used_by_char').find('img').attr('src')
+        let chars = $(this).find('div.sea_item_used_by_char').find('img')
 
         if (itemName.includes(`Dvalin's Plume`)) {
-          plume.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
+          chars.each(function (index, element) {
+            plume.push([`=IMAGE("https://genshin.honeyhunterworld.com/${$(this).attr('src')}")`])
+          })
         }
         else if (itemName.includes(`Dvalin's Claw`)) {
-          claw.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
+          chars.each(function (index, element) {
+            claw.push([`=IMAGE("https://genshin.honeyhunterworld.com/${$(this).attr('src')}")`])
+          })
         }
         else if (itemName.includes(`Dvalin's Sigh`)) {
-          sigh.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
+          chars.each(function (index, element) {
+            sigh.push([`=IMAGE("https://genshin.honeyhunterworld.com/${$(this).attr('src')}")`])
+          })
         }
         else if (itemName.includes(`Tail of Boreas`)) {
-          tail.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
+          chars.each(function (index, element) {
+            tail.push([`=IMAGE("https://genshin.honeyhunterworld.com/${$(this).attr('src')}")`])
+          })
         }
         else if (itemName.includes(`Ring of Boreas`)) {
-          ring.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
+          chars.each(function (index, element) {
+            ring.push([`=IMAGE("https://genshin.honeyhunterworld.com/${$(this).attr('src')}")`])
+          })
         }
         else if (itemName.includes(`Spirit Locket of Boreas`)) {
-          locket.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
+          chars.each(function (index, element) {
+            locket.push([`=IMAGE("https://genshin.honeyhunterworld.com/${$(this).attr('src')}")`])
+          })
         }
         else if (itemName.includes(`Tusk of Monoceros Caeli`)) {
-          tusk.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
+          chars.each(function (index, element) {
+            tusk.push([`=IMAGE("https://genshin.honeyhunterworld.com/${$(this).attr('src')}")`])
+          })
         }
         else if (itemName.includes(`Shard of a Foul Legacy`)) {
-          shard.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
+          chars.each(function (index, element) {
+            shard.push([`=IMAGE("https://genshin.honeyhunterworld.com/${$(this).attr('src')}")`])
+          })
         }
         else if (itemName.includes(`Shadow of the Warrior`)) {
-          shadow.push([`=IMAGE("https://genshin.honeyhunterworld.com/${chars}")`])
+          chars.each(function (index, element) {
+            shadow.push([`=IMAGE("https://genshin.honeyhunterworld.com/${$(this).attr('src')}")`])
+          })
         }
 
         arrOfItems.push(itemPic)
@@ -138,3 +156,5 @@ const pullFromArray = (arr) => {
 module.exports = {
   scrapeTalents
 }
+
+scrapeTalentMaterials()

@@ -35,22 +35,22 @@ const scrapeByWeaponType = (weaponType) => {
         let commonMaterial = $(this).find('img.itempic').eq(3).attr('src')
         
         if (weaponAscensionMaterial.includes('decarabian')) {
-          arrOfDecarabian.push([`=IMAGE("${weaponPic}")`, `${weaponStar}☆ ${weaponName}`])
+          arrOfDecarabian.push([`=IMAGE("https://genshin.honeyhunterworld.com/${weaponPic}")`, `${weaponStar}☆ ${weaponName}`])
         }
         else if (weaponAscensionMaterial.includes('wolf')) {
-          arrOfWolf.push([`=IMAGE("${weaponPic}")`, `${weaponStar}☆ ${weaponName}`])
+          arrOfWolf.push([`=IMAGE("https://genshin.honeyhunterworld.com/${weaponPic}")`, `${weaponStar}☆ ${weaponName}`])
         }
         else if (weaponAscensionMaterial.includes('gladiator')) {
-          arrOfGladiator.push([`=IMAGE("${weaponPic}")`, `${weaponStar}☆ ${weaponName}`])
+          arrOfGladiator.push([`=IMAGE("https://genshin.honeyhunterworld.com/${weaponPic}")`, `${weaponStar}☆ ${weaponName}`])
         }
         else if (weaponAscensionMaterial.includes('guyun')) {
-          arrOfGuyun.push([`=IMAGE("${weaponPic}")`, `${weaponStar}☆ ${weaponName}`])
+          arrOfGuyun.push([`=IMAGE("https://genshin.honeyhunterworld.com/${weaponPic}")`, `${weaponStar}☆ ${weaponName}`])
         }
         else if (weaponAscensionMaterial.includes('veiled')) {
-          arrOfVeiled.push([`=IMAGE("${weaponPic}")`, `${weaponStar}☆ ${weaponName}`])
+          arrOfVeiled.push([`=IMAGE("https://genshin.honeyhunterworld.com/${weaponPic}")`, `${weaponStar}☆ ${weaponName}`])
         }
         else if (weaponAscensionMaterial.includes('aerosiderite')) {
-          arrOfAerosiderite.push([`=IMAGE("${weaponPic}")`, `${weaponStar}☆ ${weaponName}`])
+          arrOfAerosiderite.push([`=IMAGE("https://genshin.honeyhunterworld.com/${weaponPic}")`, `${weaponStar}☆ ${weaponName}`])
         }
 
         arrOfWeaponAscMat.push(weaponAscensionMaterial)
@@ -75,11 +75,11 @@ const scrapeWeapons = () => {
     await scrapeByWeaponType('catalyst')
 
     console.log('Building weapons table')
-    table.push([`=IMAGE("${arrOfWeaponAscMat.find(ele => ele.includes('decarabian'))}")`,
+    table.push([`=IMAGE("https://genshin.honeyhunterworld.com/${arrOfWeaponAscMat.find(ele => ele.includes('decarabian'))}")`,
       '"Decarabian"',
-      `=IMAGE("${arrOfWeaponAscMat.find(ele => ele.includes('wolf'))}")`,
+      `=IMAGE("https://genshin.honeyhunterworld.com/${arrOfWeaponAscMat.find(ele => ele.includes('wolf'))}")`,
       '"Wolf"',
-      `=IMAGE("${arrOfWeaponAscMat.find(ele => ele.includes('gladiator'))}")`,
+      `=IMAGE("https://genshin.honeyhunterworld.com/${arrOfWeaponAscMat.find(ele => ele.includes('gladiator'))}")`,
       '"Gladiator"',
     ])
 
@@ -96,11 +96,11 @@ const scrapeWeapons = () => {
 
     table.push(['', '', '', '', '', ''])
     
-    table.push([`=IMAGE("${arrOfWeaponAscMat.find(ele => ele.includes('guyun'))}")`,
+    table.push([`=IMAGE("https://genshin.honeyhunterworld.com/${arrOfWeaponAscMat.find(ele => ele.includes('guyun'))}")`,
       '"Guyun"',
-      `=IMAGE("${arrOfWeaponAscMat.find(ele => ele.includes('veiled'))}")`,
+      `=IMAGE("https://genshin.honeyhunterworld.com/${arrOfWeaponAscMat.find(ele => ele.includes('veiled'))}")`,
       '"Veiled"',
-      `=IMAGE("${arrOfWeaponAscMat.find(ele => ele.includes('aerosiderite'))}")`,
+      `=IMAGE("https://genshin.honeyhunterworld.com/${arrOfWeaponAscMat.find(ele => ele.includes('aerosiderite'))}")`,
       '"Aerosiderite"',
     ])
 
