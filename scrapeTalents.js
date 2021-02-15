@@ -156,5 +156,3 @@ const pullFromArray = (arr) => {
 module.exports = {
   scrapeTalents
 }
-
-scrapeTalentMaterials()
