@@ -85,14 +85,14 @@ async function listMajors(auth) {
   console.log('  - Clearing')
   await sheets.spreadsheets.values.clear({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: '3.0!C4:6'
+    range: 'Page1!C4:6'
   });
   console.log('  - Building');
   const bookTable = await buildTalentBook(scrapedCharacters);
   console.log('  - Writing')
   await sheets.spreadsheets.values.update({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: '3.0!C4:6',
+    range: 'Page1!C4:6',
     valueInputOption: 'USER_ENTERED',
     resource: {
       values: bookTable
@@ -103,14 +103,14 @@ async function listMajors(auth) {
   console.log('  - Clearing')
   await sheets.spreadsheets.values.clear({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: '3.0!B8:1000'
+    range: 'Page1!B8:1000'
   });
   console.log('  - Building');
   const weeklyTable = await buildWeekly(scrapedCharacters);
   console.log('  - Writing')
   await sheets.spreadsheets.values.update({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: '3.0!B8:1000',
+    range: 'Page1!B8:1000',
     valueInputOption: 'USER_ENTERED',
     resource: {
       values: weeklyTable
@@ -123,7 +123,7 @@ async function listMajors(auth) {
   console.log('  - Clearing')
   await sheets.spreadsheets.values.clear({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: '3.0Weap!C4:26'
+    range: 'Page2!C4:26'
   });
   console.log('  - Building');
   const swords = await buildWeapon(scrapedWeapons.swords);
@@ -135,7 +135,7 @@ async function listMajors(auth) {
   console.log('    - Swords')
   await sheets.spreadsheets.values.update({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: '3.0Weap!C4:6',
+    range: 'Page2!C4:6',
     valueInputOption: 'USER_ENTERED',
     resource: {
       values: swords
@@ -144,7 +144,7 @@ async function listMajors(auth) {
   console.log('    - Claymores')
   await sheets.spreadsheets.values.update({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: '3.0Weap!C9:11',
+    range: 'Page2!C9:11',
     valueInputOption: 'USER_ENTERED',
     resource: {
       values: claymores
@@ -153,7 +153,7 @@ async function listMajors(auth) {
   console.log('    - Polearms')
   await sheets.spreadsheets.values.update({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: '3.0Weap!C14:16',
+    range: 'Page2!C14:16',
     valueInputOption: 'USER_ENTERED',
     resource: {
       values: polearms
@@ -162,7 +162,7 @@ async function listMajors(auth) {
   console.log('    - Bows')
   await sheets.spreadsheets.values.update({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: '3.0Weap!C19:21',
+    range: 'Page2!C19:21',
     valueInputOption: 'USER_ENTERED',
     resource: {
       values: bows
@@ -171,7 +171,7 @@ async function listMajors(auth) {
   console.log('    - Catalysts')
   await sheets.spreadsheets.values.update({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: '3.0Weap!C24:26',
+    range: 'Page2!C24:26',
     valueInputOption: 'USER_ENTERED',
     resource: {
       values: catalysts
