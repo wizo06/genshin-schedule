@@ -2,9 +2,10 @@ const fs = require('fs');
 const readline = require('readline');
 const { google } = require('googleapis');
 
-const { scrapeCharacters } = require('./scrapeCharacters.js');
-const { scrapeWeapons } = require('./scrapeWeapons.js');
-const { buildWeekly, buildTalentBook, buildWeapon } = require('./buildTable.js');
+// const { scrapeCharacters } = require('./scrapeCharacters.js');
+// const { scrapeWeapons } = require('./scrapeWeapons.js');
+const { buildWeekliesTable, buildWeapon, buildBooksTable } = require('./buildTable.js');
+const { scrapeTalentMaterial } = require('./scrapeTalentMaterial.js');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
@@ -78,105 +79,97 @@ function getNewToken(oAuth2Client, callback) {
 async function listMajors(auth) {
   const sheets = google.sheets({ version: 'v4', auth });
 
-  console.log('Scraping characters');
-  const scrapedCharacters = await scrapeCharacters();
+  console.log('Scraping Talent Level-Up Material');
+  const scrapedTalentMaterial = await scrapeTalentMaterial();
   
-  console.log('Talent Books Table');
   console.log('  - Clearing')
   await sheets.spreadsheets.values.clear({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: 'Page1!C4:6'
+    range: '4.0!B2:1000'
   });
+
   console.log('  - Building');
-  const bookTable = await buildTalentBook(scrapedCharacters);
+  const booksTable = await buildBooksTable(scrapedTalentMaterial);
+  const weekliesTable = await buildWeekliesTable(scrapedTalentMaterial);
+
   console.log('  - Writing')
   await sheets.spreadsheets.values.update({
     spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: 'Page1!C4:6',
+    range: '4.0!B2:13',
     valueInputOption: 'USER_ENTERED',
     resource: {
-      values: bookTable
+      values: booksTable
+    }
+  });
+  await sheets.spreadsheets.values.update({
+    spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
+    range: '4.0!A15:1000',
+    valueInputOption: 'USER_ENTERED',
+    resource: {
+      values: weekliesTable
     }
   });
 
-  console.log('Weekly Boss Table');
-  console.log('  - Clearing')
-  await sheets.spreadsheets.values.clear({
-    spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: 'Page1!B8:1000'
-  });
-  console.log('  - Building');
-  const weeklyTable = await buildWeekly(scrapedCharacters);
-  console.log('  - Writing')
-  await sheets.spreadsheets.values.update({
-    spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: 'Page1!B8:1000',
-    valueInputOption: 'USER_ENTERED',
-    resource: {
-      values: weeklyTable
-    }
-  });
-
-  console.log('Weapon Table');
-  console.log('  - Scraping');
-  const scrapedWeapons = await scrapeWeapons();
-  console.log('  - Clearing')
-  await sheets.spreadsheets.values.clear({
-    spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: 'Page2!C4:26'
-  });
-  console.log('  - Building');
-  const swords = await buildWeapon(scrapedWeapons.swords);
-  const claymores = await buildWeapon(scrapedWeapons.claymores);
-  const polearms = await buildWeapon(scrapedWeapons.polearms);
-  const bows = await buildWeapon(scrapedWeapons.bows);
-  const catalysts = await buildWeapon(scrapedWeapons.catalysts);
-  console.log('  - Writing')
-  console.log('    - Swords')
-  await sheets.spreadsheets.values.update({
-    spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: 'Page2!C4:6',
-    valueInputOption: 'USER_ENTERED',
-    resource: {
-      values: swords
-    }
-  });
-  console.log('    - Claymores')
-  await sheets.spreadsheets.values.update({
-    spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: 'Page2!C9:11',
-    valueInputOption: 'USER_ENTERED',
-    resource: {
-      values: claymores
-    }
-  });
-  console.log('    - Polearms')
-  await sheets.spreadsheets.values.update({
-    spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: 'Page2!C14:16',
-    valueInputOption: 'USER_ENTERED',
-    resource: {
-      values: polearms
-    }
-  });
-  console.log('    - Bows')
-  await sheets.spreadsheets.values.update({
-    spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: 'Page2!C19:21',
-    valueInputOption: 'USER_ENTERED',
-    resource: {
-      values: bows
-    }
-  });
-  console.log('    - Catalysts')
-  await sheets.spreadsheets.values.update({
-    spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
-    range: 'Page2!C24:26',
-    valueInputOption: 'USER_ENTERED',
-    resource: {
-      values: catalysts
-    }
-  });
+  // console.log('Weapon Table');
+  // console.log('  - Scraping');
+  // const scrapedWeapons = await scrapeWeapons();
+  // console.log('  - Clearing')
+  // await sheets.spreadsheets.values.clear({
+  //   spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
+  //   range: 'Page2!C4:26'
+  // });
+  // console.log('  - Building');
+  // const swords = await buildWeapon(scrapedWeapons.swords);
+  // const claymores = await buildWeapon(scrapedWeapons.claymores);
+  // const polearms = await buildWeapon(scrapedWeapons.polearms);
+  // const bows = await buildWeapon(scrapedWeapons.bows);
+  // const catalysts = await buildWeapon(scrapedWeapons.catalysts);
+  // console.log('  - Writing')
+  // console.log('    - Swords')
+  // await sheets.spreadsheets.values.update({
+  //   spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
+  //   range: 'Page2!C4:6',
+  //   valueInputOption: 'USER_ENTERED',
+  //   resource: {
+  //     values: swords
+  //   }
+  // });
+  // console.log('    - Claymores')
+  // await sheets.spreadsheets.values.update({
+  //   spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
+  //   range: 'Page2!C9:11',
+  //   valueInputOption: 'USER_ENTERED',
+  //   resource: {
+  //     values: claymores
+  //   }
+  // });
+  // console.log('    - Polearms')
+  // await sheets.spreadsheets.values.update({
+  //   spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
+  //   range: 'Page2!C14:16',
+  //   valueInputOption: 'USER_ENTERED',
+  //   resource: {
+  //     values: polearms
+  //   }
+  // });
+  // console.log('    - Bows')
+  // await sheets.spreadsheets.values.update({
+  //   spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
+  //   range: 'Page2!C19:21',
+  //   valueInputOption: 'USER_ENTERED',
+  //   resource: {
+  //     values: bows
+  //   }
+  // });
+  // console.log('    - Catalysts')
+  // await sheets.spreadsheets.values.update({
+  //   spreadsheetId: '1r64uJbwQN4KQmsZ0OBFPvd6U2F482WTTRfDhOiwV0n4',
+  //   range: 'Page2!C24:26',
+  //   valueInputOption: 'USER_ENTERED',
+  //   resource: {
+  //     values: catalysts
+  //   }
+  // });
 
   console.log('Done')
 }

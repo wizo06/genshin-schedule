@@ -1,78 +1,61 @@
-const buildWeekly = (arr) => {
-  return new Promise((resolve, reject) => {
-    const table = [];
-    const obj = {};
-    for (const char of arr) {
-      if (char.talentWeeklyIMG in obj) {
-        obj[char.talentWeeklyIMG].push(`=IMAGE("https://genshin.honeyhunterworld.com${char.portrait}")`);
-      }
-      else {
-        obj[char.talentWeeklyIMG] = [`=IMAGE("https://genshin.honeyhunterworld.com${char.portrait}")`];
+const fetch = require('node-fetch');
+const cheerio = require('cheerio');
+
+const retrieveCharacterName = (URL) => {
+  return new Promise(async (resolve, reject) => {
+    const response = await fetch(`https://genshin.honeyhunterworld.com${URL}`);
+    const body = await response.text();
+    $ = cheerio.load(body);
+    const charName = $('h1.post-title.entry-title').text().trim();
+    resolve(charName);
+  })
+};
+
+const buildIconNameRows = (books, bookName) => {
+  return new Promise(async (resolve, reject) => {
+    const icons = [], names = [];
+    for (const book of books) {
+      if (book.item.name.includes(bookName)) {
+        icons.push(`=IMAGE("https://genshin.honeyhunterworld.com${book.item.pic}")`);
+        names.push(book.item.name.replace('Philosophies of ', ''));
+
+        for (const char of book.char) {
+          icons.push(`=IMAGE("https://genshin.honeyhunterworld.com${char.pic}")`);
+          const charName = await retrieveCharacterName(char.URL);
+          names.push(charName);
+        }
       }
     }
+    resolve({ icons, names });
+  })
+};
 
-    for (const key in obj) {
-      table.push([`=IMAGE("https://genshin.honeyhunterworld.com${key}")`, ...obj[key]])
+const buildWeekliesTable = (obj) => {
+  return new Promise(async (resolve, reject) => {
+    const table = [];
+    for (const weekItem of obj.weeklies) {
+      const icons = [], names = [];
+      weekItem.item.name
+      weekItem.item.pic
+      icons.push(`=IMAGE("https://genshin.honeyhunterworld.com${weekItem.item.pic}")`);
+      names.push(weekItem.item.name);
+      
+      for (const char of weekItem.char) {
+        char.URL
+        char.pic
+        icons.push(`=IMAGE("https://genshin.honeyhunterworld.com${char.pic}")`);
+        const charName = await retrieveCharacterName(char.URL);
+        names.push(charName);
+      }
+
+      table.push( icons, names );
     }
     
     resolve(table);
   });
 }
 
-const buildColumnChars = (domains, arr) => {
-  let temp = [];
-  domains.each(function (i, elem) {
-    const dropIMG = $(this).find('img').last().attr('src');
-    // Append talent book image
-    // for (const char of arr) {
-    //   if (dropIMG == char.talentBookIMG) {
-    //     temp.push(`=IMAGE("https://genshin.honeyhunterworld.com${dropIMG}")`);
-    //     break;
-    //   }
-    // }
-
-    // Append the corresponding characters
-    for (const char of arr) {
-      if (dropIMG == char.talentBookIMG) {
-        temp.push(`=IMAGE("https://genshin.honeyhunterworld.com${char.portrait}")`);
-      }
-    }
-  })
-  return temp;
-}
-
-const buildTalentBook = (arr) => { 
-  const request = require('request');
-  const cheerio = require('cheerio');
-
-  return new Promise((resolve, reject) => {
-    const options = {
-      url: `https://genshin.honeyhunterworld.com/`
-    }
-
-    request(options, (err, res, body) => {
-      $ = cheerio.load(body)
-      // Mon, Tue, Wed
-      const mon = $('.homepage_index_cont.calendar_day_wrap').eq(0);
-      const tue = $('.homepage_index_cont.calendar_day_wrap').eq(1);
-      const wed = $('.homepage_index_cont.calendar_day_wrap').eq(2);
-      // Domain
-      const monDomains = mon.find('.item_secondary_title');
-      const tueDomains = tue.find('.item_secondary_title');
-      const wedDomains = wed.find('.item_secondary_title');
-
-      // Build column arrays
-      const monday = buildColumnChars(monDomains, arr);
-      const tuesday = buildColumnChars(tueDomains, arr);
-      const wednesday = buildColumnChars(wedDomains, arr);
-
-      const table = [monday, tuesday, wednesday];
-      resolve(table);
-    });
-  });
-}
-
-const buildColumnWeaps = (domains, arr) => {
+const buildRowWeaps = (domains, arr) => {
   let temp = [];
   domains.each(function (i, elem) {
     const dropIMG = $(this).find('img').first().attr('src');
@@ -95,7 +78,7 @@ const buildColumnWeaps = (domains, arr) => {
 }
 
 const buildWeapon = (arr) => {
-  const request = require('request');
+  const fetch = require('node-fetch');
   const cheerio = require('cheerio');
 
   return new Promise((resolve, reject) => {
@@ -115,9 +98,9 @@ const buildWeapon = (arr) => {
       const wedDomains = wed.find('.item_secondary_title');
 
       // Build column arrays
-      const monday = buildColumnWeaps(monDomains, arr);
-      const tuesday = buildColumnWeaps(tueDomains, arr);
-      const wednesday = buildColumnWeaps(wedDomains, arr);
+      const monday = buildRowWeaps(monDomains, arr);
+      const tuesday = buildRowWeaps(tueDomains, arr);
+      const wednesday = buildRowWeaps(wedDomains, arr);
 
       const table = [monday, tuesday, wednesday];
       resolve(table);
@@ -125,4 +108,29 @@ const buildWeapon = (arr) => {
   });
 };
 
-module.exports = { buildWeekly, buildTalentBook, buildWeapon }
+const buildBooksTable = (obj) => {
+  return new Promise(async (resolve, reject) => {
+    const free = await buildIconNameRows(obj.books, 'Freedom');
+    const resi = await buildIconNameRows(obj.books, 'Resistance');
+    const ball = await buildIconNameRows(obj.books, 'Ballad');
+    const pros = await buildIconNameRows(obj.books, 'Prosperity');
+    const dili = await buildIconNameRows(obj.books, 'Diligence');
+    const gold = await buildIconNameRows(obj.books, 'Gold');
+
+    const table = [
+      free.icons, free.names,
+      pros.icons, pros.names,
+      resi.icons, resi.names,
+      dili.icons, dili.names,
+      ball.icons, ball.names,
+      gold.icons, gold.names
+    ]
+    resolve(table);
+  });
+};
+
+module.exports = { 
+  buildBooksTable, 
+  buildWeekliesTable, 
+  buildWeapon, 
+}
